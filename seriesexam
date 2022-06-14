@@ -1,0 +1,253 @@
+> use EMP
+switched to db EMP
+> db.createCollection("EMPL")
+{ "ok" : 1 }
+> db.EMPL.insert({emp_id:101,name:"Sneha",salary:2000,role:"OB"})
+WriteResult({ "nInserted" : 1 })
+> db.EMPL.insert({emp_id:102,name:"MSD",salary:5000,role:"C"})
+WriteResult({ "nInserted" : 1 })
+> db.EMPL.insert({emp_id:103,name:"Remya",salary:3000,role:"MOB"})
+WriteResult({ "nInserted" : 1 })
+> db.EMPL.insert({emp_id:104,name:"Siv",salary:5000,role:"RD"})
+WriteResult({ "nInserted" : 1 })
+> db.EMPL.insert({emp_id:105,name:"Ronny",salary:4000,role:"OB"})
+WriteResult({ "nInserted" : 1 })
+>db.EMPL.insert({emp_id:106,name:"Ronk",salary:4000,role:"MOB"})
+WriteResult({ "nInserted" : 1 })
+
+1)
+> db.EMPL.find().pretty()
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 2000,
+        "role" : "OB"
+}
+{
+        "_id" : ObjectId("62a84b1d22228a4e582305d1"),
+        "emp_id" : 102,
+        "name" : "MSD",
+        "salary" : 5000,
+        "role" : "C"
+}
+{
+        "_id" : ObjectId("62a84b8822228a4e582305d2"),
+        "emp_id" : 103,
+        "name" : "Remya",
+        "salary" : 3000,
+        "role" : "MOB"
+}
+{
+        "_id" : ObjectId("62a84bbe22228a4e582305d3"),
+        "emp_id" : 104,
+        "name" : "Siv",
+        "salary" : 5000,
+        "role" : "WK"
+}
+{
+        "_id" : ObjectId("62a84bde22228a4e582305d4"),
+        "emp_id" : 105,
+        "name" : "Ronny",
+        "salary" : 4000,
+        "role" : "OB"
+}
+
+2)
+
+> db.EMPL.update({name:"Sneha"},{$inc:{salary:8000}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.EMPL.find({name:"Sneha"}).pretty()
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 10000,
+        "role" : "OB"
+}
+
+
+3)
+
+>db.EMPL.updateMany({},{$inc:{salary:4000}})
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 5 }
+> db.EMPL.find().pretty()
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 18000,
+        "role" : "OB"
+}
+{
+        "_id" : ObjectId("62a84b1d22228a4e582305d1"),
+        "emp_id" : 102,
+        "name" : "MSD",
+        "salary" : 9000,
+        "role" : "C"
+}
+{
+        "_id" : ObjectId("62a84b8822228a4e582305d2"),
+        "emp_id" : 103,
+        "name" : "Remya",
+        "salary" : 7000,
+        "role" : "MOB"
+}
+{
+        "_id" : ObjectId("62a84bbe22228a4e582305d3"),
+        "emp_id" : 104,
+        "name" : "Siv",
+        "salary" : 9000,
+        "role" : "WK"
+}
+{
+        "_id" : ObjectId("62a84bde22228a4e582305d4"),
+        "emp_id" : 105,
+        "name" : "Ronny",
+        "salary" : 8000,
+        "role" : "OB"
+}
+
+4)
+> db.EMPL.update({name:"MSD"},{$set:{role:"C and WK"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.EMPL.find({name:"MSD"}).pretty()
+{
+        "_id" : ObjectId("62a84b1d22228a4e582305d1"),
+        "emp_id" : 102,
+        "name" : "MSD",
+        "salary" : 9000,
+        "role" : "C and WK"
+}
+
+5)
+> db.EMPL.update({name:"Remya"},{$set:{Remark:"WC"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.EMPL.find({name:"Remya"}).pretty()
+{
+        "_id" : ObjectId("62a84b8822228a4e582305d2"),
+        "emp_id" : 103,
+        "name" : "Remya",
+        "salary" : 7000,
+        "role" : "MOB",
+        "Remark" : "WC"
+}
+
+6)
+
+7)
+> db.EMPL.find({name:{$regex:"^S"}},{}).pretty()
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 18000,
+        "role" : "OB"
+}
+{
+        "_id" : ObjectId("62a84bbe22228a4e582305d3"),
+        "emp_id" : 104,
+        "name" : "Siv",
+        "salary" : 9000,
+        "role" : "RD"
+}
+
+8)
+> db.EMPL.find({name:{$regex:"\k"}},{}).pretty()
+{
+        "_id" : ObjectId("62a8534622228a4e582305d5"),
+        "emp_id" : 106,
+        "name" : "Ronk",
+        "salary" : 4000,
+        "role" : "MOB"
+}
+
+9)
+> db.EMPL.find({name:{$regex:"S"}},{}).pretty()
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 18000,
+        "role" : "OB"
+}
+{
+        "_id" : ObjectId("62a84b1d22228a4e582305d1"),
+        "emp_id" : 102,
+        "name" : "MSD",
+        "salary" : 9000,
+        "role" : "C and WK"
+}
+{
+        "_id" : ObjectId("62a84bbe22228a4e582305d3"),
+        "emp_id" : 104,
+        "name" : "Siv",
+        "salary" : 9000,
+        "role" : "RD"
+}
+
+10)
+> db.EMPL.find().pretty().limit(1).sort({salary:1})
+{
+        "_id" : ObjectId("62a8534622228a4e582305d5"),
+        "emp_id" : 106,
+        "name" : "Ronk",
+        "salary" : 4000,
+        "role" : "MOB"
+}
+> db.EMPL.find().pretty().limit(1).sort({salary:-1})
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 18000,
+        "role" : "OB"
+
+11)
+> db.EMPL.find({$or:[{role:"OB"},{role:"MOB"}]},{}).pretty()
+{
+        "_id" : ObjectId("62a84ad022228a4e582305d0"),
+        "emp_id" : 101,
+        "name" : "Sneha",
+        "salary" : 18000,
+        "role" : "OB"
+}
+{
+        "_id" : ObjectId("62a84b8822228a4e582305d2"),
+        "emp_id" : 103,
+        "name" : "Remya",
+        "salary" : 7000,
+        "role" : "MOB"
+}
+{
+        "_id" : ObjectId("62a84bde22228a4e582305d4"),
+        "emp_id" : 105,
+        "name" : "Ronny",
+        "salary" : 8000,
+        "role" : "OB"
+}
+{
+        "_id" : ObjectId("62a8534622228a4e582305d5"),
+        "emp_id" : 106,
+        "name" : "Ronk",
+        "salary" : 4000,
+        "role" : "MOB"
+}
+
+12)
+> db.EMPL.find({$nor:[{role:"OB"},{role:"MOB"}]},{}).pretty()
+{
+        "_id" : ObjectId("62a84b1d22228a4e582305d1"),
+        "emp_id" : 102,
+        "name" : "MSD",
+        "salary" : 9000,
+        "role" : "C and WK"
+}
+{
+        "_id" : ObjectId("62a84bbe22228a4e582305d3"),
+        "emp_id" : 104,
+        "name" : "Siv",
+        "salary" : 9000,
+        "role" : "RD"
+}
+>
